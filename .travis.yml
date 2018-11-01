@@ -38,5 +38,7 @@ deploy:
   region: eu-central-1
   app: test2
   env: Test2-env
+  bucket_name: elasticbeanstalk-eu-central-1-935769189383
   on:
     repo: strt/ci-travis-test
+    branch: master
