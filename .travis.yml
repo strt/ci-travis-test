@@ -21,11 +21,8 @@ before_deploy:
 - rm .env.example
 - touch .env
 - export ARTIFACT_PRE=$(echo $TRAVIS_REPO_SLUG | sed  s_^.*/__)
-- export ARTIFACT_NAME=${ARTIFACT_PRE}-${TRAVIS_BRANCH}-$(
-  echo ${TRAVIS_COMMIT} | cut -b 1-8
-  )-$(
-  date -u +%FT%T%Z
-  ).zip
+- export ARTIFACT_NAME=${ARTIFACT_PRE}-${TRAVIS_BRANCH}-$( echo ${TRAVIS_COMMIT} |
+  cut -b 1-8 )-$( date -u +%FT%T%Z ).zip
 - export ELASTIC_BEANSTALK_LABEL=$(echo $ARTIFACT_NAME | sed s_.zip__)
 - zip $ARTIFACT_NAME -q -r * .[^.]*
 - ls -la $ARTIFACT_NAME
@@ -33,16 +30,13 @@ branches:
   only:
   - master
 deploy:
-- provider: elasticbeanstalk
-  skip_cleanup: true
-  zip_file: "$ARTIFACT_NAME"
+  provider: elasticbeanstalk
   access_key_id:
-    secure: "kkZ8rH18mVMdsYk9rKFbHecJw3BiRpy9bEBDSVeQKDvDOR0/Lrtg2tDHY9tdmJdleDKdcO0bt+iBkPZQ4b1PxCLurALBgIe68Gk2othl13WPXmjiHL3PUX4t3ho5yAlnrXxX0QBkYBadjqrG2jW4R5kpK/ce7ekZ7QW0qOH/xXfn3zsSytwWdOB2HbN1124+FMO1xZewAl9bUYAH2Dpww3i2oEF8jhUVSr1NO7GABSFUenpkhUuj0USTwOQRYCSm6zNMWAzQVrVlLE/nXZ9je/V714ImKqRIDYyI4GHmcLdj3b+X8HXrvXzhZhy22Z1+TovbwHOMGLscL00zvBk7LEEgYjOrPZ8mTUBzHDBsR5/IdT8TaGKVw87Rrrf7Urq3ejmqbp8M5RFTirea2KmIijymKwAPM011GmuQ7CUX4/VSWyLQjj82+JDT5/N1rFiwRf/bURjLYd9bu6KsIq8N/zadtAIbVF41Wtvojh0kRFXOkvVv92ZmLzi5Hgxit21Whrikd3b0WhJARmAWyGd8ndqgo1JowAbNnCbcJTYB847vFR9ZIhOKtyZ0iQzt92cbZsJOSUjm1Slwng1rgKks2H3IDjGyjjMtYpO67c+HJWbVJglJ/JmMrsbnsv5reyTc7ZmtteheNhgrBZMnxd2fSdF9wf0yk/GSjYh+YH/e7KM="
+    secure: "Gcx50KbQCh6UiM9UuiVKgA+s3Bcw9g0wLRDnAsEzA7Toyl1CHLbe29i02DGJgI9dI0tY0vSRdKPz+9EIbJrvPIbnhoSZWwpHm5hmshPYT1o8+5RyI8xMbJPr1zuB97faBR/oUsmCvTAjeF7YcCQ88p9UVnpQsq6JJUPLAOctDExeTkxtdojBftQuNpVY50S4KJ1G6HpKKc57mVlPxE+ucrmNCdIjtiB2M9F0wfrHs0JaVwEXNCRsF7yQw1qdBZqvaWBZuBGjaaZk2erk47edZWLSO8BAEeDsQDJgDaPo2Kd6OFObn1xhz6Ui2k5+mNoLiLOU3W9G5qN2BBiVq9l2rN0s/bEu4TTDCwoXXOiPe3zXznstFNgE1Q9lgHUP6Wii/MTKhPERYeh0w5KQ+xDUBooomKlZMbQsoPm77+9YYhO4jmv7BimgT104edw28QlO5d5Ee8uVDQ87xdEgJ/XqI3yKYqtS+3l3VAO3Oon+xttNGC9k3haHuEstRlQgjkNqXYOQc/FHsD9IaxTh9x7vkvB8HP4WPS0gOV/5TC3O8xJyunxnOd6IrI0EpvWm0Ym+6wh+Mt2oh5VzpS1bavIc/+2pmLZ2I/gn5PM0ypVBXt6elXbHlAup/Y42gD2g5M1/0emFx1zdVfGQzHtrGxDyg4EWb7TgVSVNLJDZYpJKBbU="
   secret_access_key:
-    secure: "a5Q8fhLGaog+oXEVSNN0iATYeV3jcafx8dvVZXzH8oeaLrZiaVGtN1M0rbtuJgb5WCHmdDWMTMTw8zeMdHp7vFHU7z+1h70NR2V3bnjXsJopsn5JvHTDNHkd6HYZuJw1pvOhEv5y8wXoJ0dgwN45+4+9BD/lgPZapRTkaE1p8oeWHGpUbwmrCCdz6pzMAhVJe+5Ina2sGng4FAI5CbMCGQkf8yUTY0r674yq0/V1H/1g0KKeF34nUQDnYXQVTkJAeedoiTMUzbhoZ58U5G77Qk3JwvqnssUv8twigdlmukH+CFeEGNka0Nt5gH+zOQzoRbtZzWQtbwRv1cMU5wgrVjftW8xZhS8Ld6VtGv5bA6D/a7OggYRxs3MCv1BRX/svmxhkmT50EAaZCxTLeBvpQtXPMGDLaX9DaTQ2ueROweZQ2K3X9FUTH95kyhoEFzTx61v/tYDZUMEzLsaDkE6Erx4DObmJf7fNVec2Cg84e5SBEn8ucnvOI4a9KrsAbbKa9zFB6nr4b72nc/63U1PG/6MOTCQ/oxYakykJKPMCB87pZU3JcGwhXEwbZn4IGxeUT/6D5BRlnjka8P/ugutW9UpR0E561dHsE0D1lXCL7ct1oiuCk9Y8hwiWl6vR8toJKt+XG2gw4VOq3Kkj59fWZ8QVgFWBpHGmNyxehVaVdbo="
-  region: eu-central-1c
-  app: test
-  env: Test-env
-  bucket_name: elasticbeanstalk-eu-central-1-935769189383
+    secure: fcI6wwnr4t3+Nu/6E6oiZcbbVZ6yRAu6aiWWzlZjTbKAAfmgNlJyID3+hFq2TVC8yqyE/LeK0PXoV05UvFgkoEyPon9JqpNrVwXhvyegraNf8ZUzqPMOZCBwduVXte7qrm5o6FnSKfVjPuRviWQzWfpG8DBE8hiVoeYkModbt65DNwATYxSUR0E7Qirl7cT8tkDHRHQWTUEo89FsXqOoITVDJaJaXIQlz6CWlPwt57KxrcOlFXRXk1B3pG7lUj6TN+u2zksBfbg3NEmxzWKyI7fcOCSF484S3/WBUWzqqg/I2v5SJtt2nPuSudAWk2Y2hwOQ01UG+rMDddX761drvKiP0VVn3DiXicNCE+Fz+PfndC6UmeZkClXmLr/F7Z0a/xPh4IpLSlhVPnwrOiY5K3r8NmB5HvhS3MNncB9+9q2DFOnKOhxfpmvx/yG8QGefTaXvEe4Y+cRT/pZPx+5bw4v2BpV+ZRXLBd3CcwTxVEql5tn3cDxtW8RPBClrVSVrrRaAvaFUXGlLWr4lXOcIj6Kxahfh1S6CSWfJHW8NNNgCJ5oaPRUyRs5kmECdHc/trgO0yYgbOUVTTgC4lLsV7QeoMvkam7cYbA3herphR0N3MXBPXyt+UhtRbG+NWQ7LNRpe3gkW/gIRBYuqbQU5LEaBeV7h0wF0TkcMKcIeag0=
+  region: eu-central-1
+  app: test2
+  env: Test2-env
   on:
-    branch: master
+    repo: strt/ci-travis-test
