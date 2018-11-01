@@ -1,0 +1,113 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "environment": [
+        {
+          "name": "DOMAIN",
+          "value": "localhost"
+        },
+        {
+          "name": "EMAIL",
+          "value": "dan.godiac@strateg.se"
+        }
+      ],
+      "essential": true,
+      "image": "bradjonesllc/docker-nginx-letsencrypt",
+      "mountPoints": [
+        {
+          "containerPath": "/etc/letsencrypt",
+          "sourceVolume": "SrvLetsencrypt"
+        },
+        {
+          "containerPath": "/etc/nginx/conf.d/default.conf",
+          "sourceVolume": "_Nginx-ConfDefault_Conf"
+        },
+        {
+          "containerPath": "/etc/cron.d/certbot",
+          "sourceVolume": "_Docker-Nginx-LetsencryptCertbot-Crontab"
+        }
+      ],
+      "name": "nginx-proxy",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        },
+        {
+          "containerPort": 443,
+          "hostPort": 443
+        }
+      ]
+    },
+    {
+      "essential": true,
+      "image": "strateg/php:7.2-production",
+      "mountPoints": [
+        {
+          "containerPath": "/var/app/test",
+          "sourceVolume": "Data"
+        }
+      ],
+      "name": "php",
+      "portMappings": [
+        {
+          "containerPort": 9000,
+          "hostPort": 9000
+        }
+      ]
+    },
+    {
+      "essential": true,
+      "image": "redis:latest",
+      "name": "redis"
+    },
+    {
+      "essential": true,
+      "image": "strt/nginx:wordpress-production",
+      "links": [
+        "php"
+      ],
+      "mountPoints": [
+        {
+          "containerPath": "/var/app/test",
+          "sourceVolume": "Data"
+        }
+      ],
+      "name": "strt-nginx"
+    }
+  ],
+  "family": "",
+  "volumes": [
+    {
+      "host": {
+        "sourcePath": "data"
+      },
+      "name": "Data"
+    },
+    {
+      "host": {
+        "sourcePath": "./nginx-conf/dhparam.pem"
+      },
+      "name": "_Nginx-ConfDhparam_Pem"
+    },
+    {
+      "host": {
+        "sourcePath": "/srv/letsencrypt"
+      },
+      "name": "SrvLetsencrypt"
+    },
+    {
+      "host": {
+        "sourcePath": "./nginx-conf/default.conf"
+      },
+      "name": "_Nginx-ConfDefault_Conf"
+    },
+    {
+      "host": {
+        "sourcePath": "./docker-nginx-letsencrypt/certbot-crontab"
+      },
+      "name": "_Docker-Nginx-LetsencryptCertbot-Crontab"
+    }
+  ]
+}
