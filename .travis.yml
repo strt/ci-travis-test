@@ -14,7 +14,6 @@ before_script:
 - npm install -s -g jshint
 - npm install -s
 script:
-- php artisan migrate
 - npm run production
 before_deploy:
 - rm .env
