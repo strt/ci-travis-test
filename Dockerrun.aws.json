@@ -122,7 +122,7 @@
     },
     {
       "host": {
-        "sourcePath": "/var/app/current/nginx-proxy.conf"
+        "sourcePath": "/var/app/current/docker/nginx-proxy.conf"
       },
       "name": "SrvDockerNginx-Proxy_Conf"
     },
@@ -140,7 +140,7 @@
     },
     {
       "host": {
-        "sourcePath": "/var/app/current/default.conf"
+        "sourcePath": "/var/app/current/docker/default.conf"
       },
       "name": "_Default_Conf"
     },
