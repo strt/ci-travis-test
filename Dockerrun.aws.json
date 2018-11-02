@@ -22,7 +22,7 @@
       ],
       "essential": true,
       "image": "mysql:5.7",
-      "memory": 512,
+      "memory": 400,
       "links": [
         "php"
       ],
@@ -43,7 +43,7 @@
     {
       "essential": true,
       "image": "nginx:1.15-alpine",
-      "memory": 128,
+      "memory": 64,
       "links": [
         "php"
       ],
@@ -102,7 +102,7 @@
     {
       "essential": true,
       "image": "strateg/php:7.2-dev",
-      "memory": 256,
+      "memory": 128,
       "mountPoints": [
         {
           "containerPath": "/var/www",

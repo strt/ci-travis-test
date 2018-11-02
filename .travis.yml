@@ -39,6 +39,7 @@ deploy:
   app: test
   env: Test-env
   bucket_name: elasticbeanstalk-eu-central-1-935769189383
+  skip_cleanup: true
   on:
     repo: strt/ci-travis-test
     branch: master
