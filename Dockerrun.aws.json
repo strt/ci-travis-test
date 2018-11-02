@@ -67,7 +67,7 @@
         },
         {
           "name": "CERTS",
-          "value": "localhost"
+          "value": "ec2-18-184-101-179.eu-central-1.compute.amazonaws.com"
         }
       ],
       "essential": true,
