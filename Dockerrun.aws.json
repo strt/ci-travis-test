@@ -4,16 +4,75 @@
     {
       "environment": [
         {
-          "name": "DOMAIN",
-          "value": "localhost"
+          "name": "MYSQL_DATABASE",
+          "value": "homestead"
         },
         {
+          "name": "MYSQL_PASSWORD",
+          "value": "secret"
+        },
+        {
+          "name": "MYSQL_ROOT_PASSWORD",
+          "value": "secret"
+        },
+        {
+          "name": "MYSQL_USER",
+          "value": "homestead"
+        }
+      ],
+      "essential": true,
+      "image": "mysql:5.7",
+      "memory": 512,
+      "links": [
+        "php"
+      ],
+      "mountPoints": [
+        {
+          "containerPath": "/var/lib/mysql",
+          "sourceVolume": "Db"
+        }
+      ],
+      "name": "mysql",
+      "portMappings": [
+        {
+          "containerPort": 3306,
+          "hostPort": 3306
+        }
+      ]
+    },
+    {
+      "essential": true,
+      "image": "nginx:1.15-alpine",
+      "memory": 128,
+      "links": [
+        "php"
+      ],
+      "mountPoints": [
+        {
+          "containerPath": "/var/www",
+          "sourceVolume": "Data"
+        },
+        {
+          "containerPath": "/etc/nginx/conf.d/default.conf",
+          "sourceVolume": "_Default_Conf"
+        }
+      ],
+      "name": "nginx"
+    },
+    {
+      "environment": [
+        {
           "name": "EMAIL",
-          "value": "dan.godiac@strateg.se"
+          "value": "dangodiac@gmail.com"
+        },
+        {
+          "name": "CERTS",
+          "value": "localhost"
         }
       ],
       "essential": true,
       "image": "bradjonesllc/docker-nginx-letsencrypt",
+      "memory": 128,
       "mountPoints": [
         {
           "containerPath": "/etc/letsencrypt",
@@ -21,15 +80,14 @@
         },
         {
           "containerPath": "/etc/nginx/conf.d/default.conf",
-          "sourceVolume": "_Nginx-ConfDefault_Conf"
+          "sourceVolume": "SrvDockerNginx-Proxy_Conf"
         },
         {
-          "containerPath": "/etc/cron.d/certbot",
-          "sourceVolume": "_Docker-Nginx-LetsencryptCertbot-Crontab"
+          "containerPath": "/etc/ssl/dhparam",
+          "sourceVolume": "SrvDhparam"
         }
       ],
       "name": "nginx-proxy",
-      "memory": 128,
       "portMappings": [
         {
           "containerPort": 80,
@@ -43,58 +101,19 @@
     },
     {
       "essential": true,
-      "image": "strateg/php:7.2-production",
+      "image": "strateg/php:7.2-dev",
+      "memory": 256,
       "mountPoints": [
         {
-          "containerPath": "/var/app/test",
+          "containerPath": "/var/www",
           "sourceVolume": "Data"
         }
       ],
-      "name": "php",
-      "memory": 128,
-      "portMappings": [
-        {
-          "containerPort": 9000,
-          "hostPort": 9000
-        }
-      ]
-    },
-    {
-      "essential": true,
-      "image": "redis:latest",
-      "memory": 64,
-      "name": "redis"
-    },
-    {
-      "essential": true,
-      "image": "strt/nginx:wordpress-production",
-      "memory": 128,
-      "links": [
-        "php"
-      ],
-      "mountPoints": [
-        {
-          "containerPath": "/var/app/test",
-          "sourceVolume": "Data"
-        }
-      ],
-      "name": "strt-nginx"
+      "name": "php"
     }
   ],
   "family": "",
   "volumes": [
-    {
-      "host": {
-        "sourcePath": "data"
-      },
-      "name": "Data"
-    },
-    {
-      "host": {
-        "sourcePath": "./nginx-conf/dhparam.pem"
-      },
-      "name": "_Nginx-ConfDhparam_Pem"
-    },
     {
       "host": {
         "sourcePath": "/srv/letsencrypt"
@@ -103,15 +122,33 @@
     },
     {
       "host": {
-        "sourcePath": "./nginx-conf/default.conf"
+        "sourcePath": "/var/app/current/nginx-proxy.conf"
       },
-      "name": "_Nginx-ConfDefault_Conf"
+      "name": "SrvDockerNginx-Proxy_Conf"
     },
     {
       "host": {
-        "sourcePath": "./docker-nginx-letsencrypt/certbot-crontab"
+        "sourcePath": "/srv/dhparam"
       },
-      "name": "_Docker-Nginx-LetsencryptCertbot-Crontab"
+      "name": "SrvDhparam"
+    },
+    {
+      "host": {
+        "sourcePath": "/var/app/current/"
+      },
+      "name": "Data"
+    },
+    {
+      "host": {
+        "sourcePath": "/var/app/current/default.conf"
+      },
+      "name": "_Default_Conf"
+    },
+    {
+      "host": {
+        "sourcePath": "/srv/mysql"
+      },
+      "name": "Db"
     }
   ]
 }
