@@ -9,12 +9,6 @@ before_script:
 - composer install --prefer-dist --no-interaction
 - php artisan cache:clear
 - php artisan key:generate
-- nvm install 7.7.1
-- npm install -s npm@latest -g
-- npm install -s -g jshint
-- npm install -s
-script:
-- npm run production
 before_deploy:
 - rm .env
 - rm .env.travis
@@ -40,6 +34,7 @@ deploy:
   env: Test-env
   bucket_name: elasticbeanstalk-eu-central-1-935769189383
   skip_cleanup: true
+  zip_file: "$ARTIFACT_NAME"
   on:
     repo: strt/ci-travis-test
     branch: master
