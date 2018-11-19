@@ -49,10 +49,6 @@
       ],
       "mountPoints": [
         {
-          "containerPath": "/var/www",
-          "sourceVolume": "Data"
-        },
-        {
           "containerPath": "/etc/nginx/conf.d/default.conf",
           "sourceVolume": "_Default_Conf"
         }
