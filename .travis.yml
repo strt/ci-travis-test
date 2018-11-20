@@ -30,8 +30,8 @@ deploy:
   secret_access_key:
     secure: fcI6wwnr4t3+Nu/6E6oiZcbbVZ6yRAu6aiWWzlZjTbKAAfmgNlJyID3+hFq2TVC8yqyE/LeK0PXoV05UvFgkoEyPon9JqpNrVwXhvyegraNf8ZUzqPMOZCBwduVXte7qrm5o6FnSKfVjPuRviWQzWfpG8DBE8hiVoeYkModbt65DNwATYxSUR0E7Qirl7cT8tkDHRHQWTUEo89FsXqOoITVDJaJaXIQlz6CWlPwt57KxrcOlFXRXk1B3pG7lUj6TN+u2zksBfbg3NEmxzWKyI7fcOCSF484S3/WBUWzqqg/I2v5SJtt2nPuSudAWk2Y2hwOQ01UG+rMDddX761drvKiP0VVn3DiXicNCE+Fz+PfndC6UmeZkClXmLr/F7Z0a/xPh4IpLSlhVPnwrOiY5K3r8NmB5HvhS3MNncB9+9q2DFOnKOhxfpmvx/yG8QGefTaXvEe4Y+cRT/pZPx+5bw4v2BpV+ZRXLBd3CcwTxVEql5tn3cDxtW8RPBClrVSVrrRaAvaFUXGlLWr4lXOcIj6Kxahfh1S6CSWfJHW8NNNgCJ5oaPRUyRs5kmECdHc/trgO0yYgbOUVTTgC4lLsV7QeoMvkam7cYbA3herphR0N3MXBPXyt+UhtRbG+NWQ7LNRpe3gkW/gIRBYuqbQU5LEaBeV7h0wF0TkcMKcIeag0=
   region: eu-central-1
-  app: test
-  env: Test-env
+  app: test2
+  env: Test2-env
   bucket_name: elasticbeanstalk-eu-central-1-935769189383
   skip_cleanup: true
   zip_file: "$ARTIFACT_NAME"
