@@ -110,6 +110,10 @@
         {
           "containerPath": "/var/www",
           "sourceVolume": "Data"
+        },
+        {
+          "containerPath": "/var/www/storage",
+          "sourceVolume": "Persistent"
         }
       ],
       "name": "php"
@@ -140,6 +144,12 @@
         "sourcePath": "data"
       },
       "name": "Data"
+    },
+    {
+      "host": {
+        "sourcePath": "persistent"
+      },
+      "name": "Persistent"
     },
     {
       "host": {
