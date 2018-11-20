@@ -104,7 +104,7 @@
     },
     {
       "essential": true,
-      "image": "935769189383.dkr.ecr.eu-central-1.amazonaws.com/test:latest",
+      "image": "935769189383.dkr.ecr.eu-central-1.amazonaws.com/test:1",
       "memory": 128,
       "mountPoints": [
         {
